@@ -19,17 +19,12 @@ function fetchWithRetry(url, retries = 3) {
     })
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function doFetch(url, retries, res, rej) {
     try {
         const resp = await axios.get(url, { timeout: 10000 });
         return res(resp.data);
     } catch (err) {
         if (retries > 0) {
-            await sleep(5000);
             setTimeout(() => {
                 doFetch(url, retries - 1, res, rej);
             })
@@ -42,8 +37,8 @@ async function doFetch(url, retries, res, rej) {
 async function checkPrices() {
     try {
 
-        const btcData = await fetchWithRetry("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
-        const btcPrice = parseFloat(btcData['bitcoin'].usd);
+        const btcData = await fetchWithRetry("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
+        const btcPrice = parseFloat(btcData.price);
         const stepBtc = 1000;
 
         if (lastBtcLevel === null) {
@@ -80,8 +75,8 @@ async function checkPrices() {
             }
         }
 
-        const asterData = await fetchWithRetry("https://api.coingecko.com/api/v3/simple/price?ids=aster-2&vs_currencies=usd");
-        const asterPrice = parseFloat(asterData['aster-2'].usd);
+        const asterData = await fetchWithRetry("https://fapi.binance.com/fapi/v1/ticker/price?symbol=ASTERUSDT");
+        const asterPrice = parseFloat(asterData.price);
         const stepAster = 0.05;
 
         if (lastAsterLevel === null) {
@@ -122,7 +117,7 @@ async function checkPrices() {
     }
 }
 
-client.once("ready", () => {
+client.once("clientReady", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     setInterval(checkPrices, 10000);
 });
