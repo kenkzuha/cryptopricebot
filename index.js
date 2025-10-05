@@ -19,6 +19,10 @@ function fetchWithRetry(url, retries = 3) {
     })
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function doFetch(url, retries, res, rej) {
     try {
         const resp = await axios.get(url, { timeout: 10000 });
