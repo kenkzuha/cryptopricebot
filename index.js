@@ -125,7 +125,7 @@ async function checkPrices() {
 
 client.once("clientReady", () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    setInterval(checkPrices, 10000);
+    setInterval(checkPrices, 60000);
 });
 
 client.login(TOKEN);
