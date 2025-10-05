@@ -49,14 +49,6 @@ async function checkPrices() {
 
         if (lastBtcLevel === null) {
             lastBtcLevel = Math.round(btcPrice / stepBtc) * stepBtc;
-
-            const embed = new EmbedBuilder()
-                .setTitle("$BTC Price Alert")
-                .setDescription(`$BTC Price Crosses: **$${lastBtcLevel.toLocaleString()}**`)
-                .setColor(0xffff00)
-                .setTimestamp();
-            const channel = await client.channels.fetch(CHANNEL_ID);
-            channel.send({ embeds: [embed] });
         } else {
             if (btcPrice >= lastBtcLevel + stepBtc) {
                 lastBtcLevel += stepBtc;
@@ -87,13 +79,6 @@ async function checkPrices() {
 
         if (lastAsterLevel === null) {
             lastAsterLevel = Math.round(asterPrice / stepAster) * stepAster;
-            const embed = new EmbedBuilder()
-                .setTitle("$ASTER Price Alert")
-                .setDescription(`$ASTER Price Crosses: **$${lastAsterLevel.toLocaleString('de-DE', { minimumFractionDigits: 3, maximumFractionDigits: 3 })}**`)
-                .setColor(0xffff00)
-                .setTimestamp();
-            const channel = await client.channels.fetch(CHANNEL_ID);
-            channel.send({ embeds: [embed] });
         } else {
             if (asterPrice >= lastAsterLevel + stepAster) {
                 lastAsterLevel += stepAster;
