@@ -25,6 +25,7 @@ async function doFetch(url, retries, res, rej) {
         return res(resp.data);
     } catch (err) {
         if (retries > 0) {
+            await sleep(5000);
             setTimeout(() => {
                 doFetch(url, retries - 1, res, rej);
             })
