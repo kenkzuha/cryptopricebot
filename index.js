@@ -29,7 +29,7 @@ async function doFetch(url, retries, res, rej) {
                 doFetch(url, retries - 1, res, rej);
             })
         } else {
-            return rej("Failed");
+            return rej(err);
         }
     }
 }
@@ -113,11 +113,11 @@ async function checkPrices() {
         }
 
     } catch (err) {
-        console.error("Error fetching prices:", err.message);
+        console.error("Error fetching prices:", err);
     }
 }
 
-client.once("clientReady", () => {
+client.once("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
     setInterval(checkPrices, 10000);
 });
