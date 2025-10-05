@@ -37,8 +37,8 @@ async function doFetch(url, retries, res, rej) {
 async function checkPrices() {
     try {
 
-        const btcData = await fetchWithRetry("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");
-        const btcPrice = parseFloat(btcData.price);
+        const btcData = await fetchWithRetry("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
+        const btcPrice = parseFloat(btcData['bitcoin'].usd);
         const stepBtc = 1000;
 
         if (lastBtcLevel === null) {
@@ -75,8 +75,8 @@ async function checkPrices() {
             }
         }
 
-        const asterData = await fetchWithRetry("https://fapi.binance.com/fapi/v1/ticker/price?symbol=ASTERUSDT");
-        const asterPrice = parseFloat(asterData.price);
+        const asterData = await fetchWithRetry("https://api.coingecko.com/api/v3/simple/price?ids=aster-2&vs_currencies=usd");
+        const asterPrice = parseFloat(asterData['aster-2'].usd);
         const stepAster = 0.05;
 
         if (lastAsterLevel === null) {
